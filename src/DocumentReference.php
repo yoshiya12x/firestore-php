@@ -91,9 +91,13 @@ class DocumentReference
      *
      * @return Snapshot
      */
-    public function snapshot(): DocumentSnapshot
+    public function snapshot()
     {
         $value = $this->apiClient->get($this->uri);
+
+        if(!isset($value) || empty($value)){
+            return '';
+        }
 
         $data = $this->valueMapper->decodeValues($value['fields']);
 

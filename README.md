@@ -22,7 +22,7 @@
 
 The recommended way to install is with Composer.
 
-    composer require morrislaptop/firestore-php
+    composer require yoshiya12x/firestore-php
 
 ## Usage
 

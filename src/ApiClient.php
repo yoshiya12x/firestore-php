@@ -23,8 +23,11 @@ class ApiClient
     public function get($uri)
     {
         $response = $this->request('GET', $uri);
+        if(isset($response)){
+            return JSON::decode((string) $response->getBody(), true);
+        }
 
-        return JSON::decode((string) $response->getBody(), true);
+        return '';
     }
 
     public function patch($uri, $value)
@@ -46,16 +49,16 @@ class ApiClient
         $this->request('DELETE', $uri);
     }
 
-    protected function request(string $method, $uri, array $options = []): ResponseInterface
+    protected function request(string $method, $uri, array $options = [])
     {
         $request = new Request($method, $uri);
 
         try {
             return $this->httpClient->send($request, $options);
         } catch (RequestException $e) {
-            throw ApiException::wrapRequestException($e);
+
         } catch (\Throwable $e) {
-            throw new ApiException($request, $e->getMessage(), $e->getCode(), $e);
+
         }
     }
 }
